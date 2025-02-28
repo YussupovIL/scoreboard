@@ -23,6 +23,19 @@ public class ScoreBoardTest {
 
     }
 
+    @Test
+    public void removeMatchTest(){
+        //given
+        Scoreboard scoreboard = new Scoreboard();
+
+        //when
+        scoreboard.startMatch("Nigeria", "Germany");
+        scoreboard.finishMatch("Nigeria", "Germany");
+
+        //then
+        assertEquals(0, scoreboard.getSummary().size());
+    }
+
 
 
 
