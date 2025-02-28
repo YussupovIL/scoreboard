@@ -14,7 +14,11 @@ public class Scoreboard {
     }
 
     public void finishMatch(String homeTeam, String awayTeam){
-
+       Optional<Match> foundMatch =  findMatch(homeTeam, awayTeam);
+       if(!foundMatch.isPresent()){
+           throw new IllegalArgumentException("no match with such teams");
+       }
+       matches.remove(foundMatch.get());
 
     }
 
@@ -27,4 +31,13 @@ public class Scoreboard {
         return matches;
     }
 
+    /**
+     * helper method to filter the list
+     * @param teamHome
+     * @param teamAway
+     * @return match
+     */
+    private Optional<Match> findMatch(String teamHome, String teamAway){
+        return matches.stream().filter(m -> teamHome.equals(m.getHomeTeam()) && teamAway.equals(m.getAwayTeam())).findFirst();
+    }
 }
