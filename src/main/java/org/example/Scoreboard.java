@@ -23,7 +23,12 @@ public class Scoreboard {
     }
 
     public void updateScore(String teamHome, String awayTeam, int homeScore, int awayScore){
-
+        Optional<Match> foundMatch =  findMatch(teamHome, awayTeam);
+        if(!foundMatch.isPresent()){
+            throw new IllegalArgumentException("no match with such teams");
+        }
+        foundMatch.get().setHomeScore(homeScore);
+        foundMatch.get().setAwayScore(awayScore);
     }
 
     public List<Match> getSummary(){

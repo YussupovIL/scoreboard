@@ -14,6 +14,11 @@ public class Match {
         awayScore = 0;
     }
 
+    public void updateScore(Match match, int homeScore, int awayScore){
+        match.setHomeScore(homeScore);
+        match.setAwayScore(awayScore);
+    }
+
     public String getAwayTeam() {
         return awayTeam;
     }
