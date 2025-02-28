@@ -12,11 +12,17 @@ public class ScoreBoardTest {
         Scoreboard scoreboard = new Scoreboard();
 
         //when
-        scoreboard.startMatch("home", "away");
+        scoreboard.startMatch("Nigeria", "Germany");
 
         //then
         assertEquals(scoreboard.getSummary().size(), 1);
+        assertEquals(0, scoreboard.getSummary().get(0).getHomeScore());
+        assertEquals( 0, scoreboard.getSummary().get(0).getAwayScore());
+        assertEquals("Nigeria", scoreboard.getSummary().get(0).getHomeTeam());
+        assertEquals("Germany", scoreboard.getSummary().get(0).getAwayTeam());
+
     }
+
 
 
 
