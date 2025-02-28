@@ -36,6 +36,20 @@ public class ScoreBoardTest {
         assertEquals(0, scoreboard.getSummary().size());
     }
 
+    @Test
+    public void updateScoreTest(){
+        //given
+        Scoreboard scoreboard = new Scoreboard();
+
+        //when
+        scoreboard.startMatch("Nigeria", "Germany");
+        scoreboard.updateScore("Nigeria", "Germany", 2, 2);
+
+        //then
+        assertEquals(2, scoreboard.getSummary().get(0).getHomeScore());
+        assertEquals(2, scoreboard.getSummary().get(0).getAwayScore());
+    }
+
 
 
 
