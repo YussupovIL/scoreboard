@@ -3,6 +3,7 @@ import org.example.Scoreboard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScoreBoardTest {
 
@@ -48,6 +49,44 @@ public class ScoreBoardTest {
         //then
         assertEquals(2, scoreboard.getSummary().get(0).getHomeScore());
         assertEquals(2, scoreboard.getSummary().get(0).getAwayScore());
+    }
+
+    @Test
+    public void getSummaryTest(){
+        //given
+        Scoreboard scoreboard = new Scoreboard();
+        Scoreboard checkScoreboard = new Scoreboard();
+
+        //when
+        scoreboard.startMatch("Mexico", "Canada");
+        scoreboard.startMatch("Spain", "Brazil");
+        scoreboard.startMatch("Germany", "France");
+        scoreboard.startMatch("Uruguay", "Italy");
+        scoreboard.startMatch("Argentina", "Australia");
+
+        scoreboard.updateScore("Mexico", "Canada",0,5);
+        scoreboard.updateScore("Spain", "Brazil", 10, 2);
+        scoreboard.updateScore("Germany", "France", 2, 2);
+        scoreboard.updateScore("Uruguay", "Italy", 6, 6);
+        scoreboard.updateScore("Argentina", "Australia",3, 1);
+
+        checkScoreboard.startMatch("Uruguay", "Italy");
+        checkScoreboard.startMatch("Spain", "Brazil");
+        checkScoreboard.startMatch("Mexico", "Canada");
+        checkScoreboard.startMatch("Argentina", "Australia");
+        checkScoreboard.startMatch("Germany", "France");
+
+        scoreboard.updateScore("Mexico", "Canada",0,5);
+        scoreboard.updateScore("Spain", "Brazil", 10, 2);
+        scoreboard.updateScore("Germany", "France", 2, 2);
+        scoreboard.updateScore("Uruguay", "Italy", 6, 6);
+        scoreboard.updateScore("Argentina", "Australia",3, 1);
+
+
+        //then
+       assertTrue(scoreboard.getSummary().equals(checkScoreboard.getSummary()));
+
+
     }
 
 
