@@ -2,8 +2,7 @@ import org.example.Match;
 import org.example.Scoreboard;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreBoardTest {
 
@@ -17,10 +16,10 @@ public class ScoreBoardTest {
 
         //then
         assertEquals(scoreboard.getSummary().size(), 1);
-        assertEquals(0, scoreboard.getSummary().get(0).getHomeScore());
-        assertEquals( 0, scoreboard.getSummary().get(0).getAwayScore());
-        assertEquals("Nigeria", scoreboard.getSummary().get(0).getHomeTeam());
-        assertEquals("Germany", scoreboard.getSummary().get(0).getAwayTeam());
+        assertEquals(0, scoreboard.getMatches().get(0).getHomeScore());
+        assertEquals( 0, scoreboard.getMatches().get(0).getAwayScore());
+        assertEquals("Nigeria", scoreboard.getMatches().get(0).getHomeTeam());
+        assertEquals("Germany", scoreboard.getMatches().get(0).getAwayTeam());
 
     }
 
@@ -34,7 +33,7 @@ public class ScoreBoardTest {
         scoreboard.finishMatch("Nigeria", "Germany");
 
         //then
-        assertEquals(0, scoreboard.getSummary().size());
+        assertEquals(0, scoreboard.getMatches().size());
     }
 
     @Test
@@ -47,8 +46,8 @@ public class ScoreBoardTest {
         scoreboard.updateScore("Nigeria", "Germany", 2, 2);
 
         //then
-        assertEquals(2, scoreboard.getSummary().get(0).getHomeScore());
-        assertEquals(2, scoreboard.getSummary().get(0).getAwayScore());
+        assertEquals(2, scoreboard.getMatches().get(0).getHomeScore());
+        assertEquals(2, scoreboard.getMatches().get(0).getAwayScore());
     }
 
     @Test
@@ -70,23 +69,16 @@ public class ScoreBoardTest {
         scoreboard.updateScore("Uruguay", "Italy", 6, 6);
         scoreboard.updateScore("Argentina", "Australia",3, 1);
 
-        checkScoreboard.startMatch("Uruguay", "Italy");
-        checkScoreboard.startMatch("Spain", "Brazil");
-        checkScoreboard.startMatch("Mexico", "Canada");
-        checkScoreboard.startMatch("Argentina", "Australia");
-        checkScoreboard.startMatch("Germany", "France");
-
-        scoreboard.updateScore("Mexico", "Canada",0,5);
-        scoreboard.updateScore("Spain", "Brazil", 10, 2);
-        scoreboard.updateScore("Germany", "France", 2, 2);
-        scoreboard.updateScore("Uruguay", "Italy", 6, 6);
-        scoreboard.updateScore("Argentina", "Australia",3, 1);
-
+        String[] expected = {
+                "Uruguay 6 - Italy 6",
+                "Spain 10 - Brazil 2",
+                "Mexico 0 - Canada 5",
+                "Argentina 3 - Australia 1",
+                "Germany 2 - France 2"
+        };
 
         //then
-       assertTrue(scoreboard.getSummary().equals(checkScoreboard.getSummary()));
-
-
+       assertArrayEquals(expected, scoreboard.getSummary().toArray());
     }
 
 

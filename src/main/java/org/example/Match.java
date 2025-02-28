@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class Match {
 
     private String homeTeam;
@@ -7,16 +9,26 @@ public class Match {
     private int homeScore;
     private int awayScore;
 
-    public Match(String homeTeam, String awayTeam) {
+    public int getStartOrder() {
+        return startOrder;
+    }
+
+    private final int startOrder;
+
+    public Match(String homeTeam, String awayTeam, int startOrder) {
         this.awayTeam = awayTeam;
         this.homeTeam = homeTeam;
+        this.startOrder = startOrder;
         homeScore = 0;
         awayScore = 0;
     }
 
-    public void updateScore(Match match, int homeScore, int awayScore){
-        match.setHomeScore(homeScore);
-        match.setAwayScore(awayScore);
+    public void updateScore(int homeScore, int awayScore) {
+        if (homeScore < 0 || awayScore < 0) {
+            throw new IllegalArgumentException("Scores cannot be negative");
+        }
+        this.homeScore = homeScore;
+        this.awayScore = awayScore;
     }
 
     public String getAwayTeam() {
@@ -42,4 +54,14 @@ public class Match {
     public void setHomeScore(int homeScore) {
         this.homeScore = homeScore;
     }
+
+    public int getTotalScore(){
+        return awayScore + homeScore;
+    }
+
+    public String getSummary() {
+        return String.format("%s %d - %s %d", homeTeam, homeScore, awayTeam, awayScore);
+    }
+
+
 }
