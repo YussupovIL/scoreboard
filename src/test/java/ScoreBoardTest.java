@@ -1,13 +1,13 @@
-import org.example.Match;
-import org.example.Scoreboard;
+import org.scoreboard.Scoreboard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreBoardTest {
 
+
     @Test
-    public void startMatchTest(){
+    public void startMatchTest() {
         //given
         Scoreboard scoreboard = new Scoreboard();
 
@@ -17,14 +17,21 @@ public class ScoreBoardTest {
         //then
         assertEquals(scoreboard.getSummary().size(), 1);
         assertEquals(0, scoreboard.getMatches().get(0).getHomeScore());
-        assertEquals( 0, scoreboard.getMatches().get(0).getAwayScore());
+        assertEquals(0, scoreboard.getMatches().get(0).getAwayScore());
         assertEquals("Nigeria", scoreboard.getMatches().get(0).getHomeTeam());
         assertEquals("Germany", scoreboard.getMatches().get(0).getAwayTeam());
 
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.startMatch("Nigeria", "USA");
+        });
+        assertTrue(exception.getMessage().contains("At least one of the teams is already playing"));
+
     }
 
+
     @Test
-    public void removeMatchTest(){
+    public void removeMatchTest() {
         //given
         Scoreboard scoreboard = new Scoreboard();
 
@@ -34,10 +41,16 @@ public class ScoreBoardTest {
 
         //then
         assertEquals(0, scoreboard.getMatches().size());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.finishMatch("Mexico", "USA");
+        });
+        assertTrue(exception.getMessage().contains("No match with such teams"));
     }
 
+
     @Test
-    public void updateScoreTest(){
+    public void updateScoreTest() {
         //given
         Scoreboard scoreboard = new Scoreboard();
 
@@ -48,10 +61,16 @@ public class ScoreBoardTest {
         //then
         assertEquals(2, scoreboard.getMatches().get(0).getHomeScore());
         assertEquals(2, scoreboard.getMatches().get(0).getAwayScore());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.updateScore("Nigeria", "Germany", -2, -3);
+        });
+        assertTrue(exception.getMessage().contains("Scores cannot be negative"));
     }
 
+
     @Test
-    public void getSummaryTest(){
+    public void getSummaryTest() {
         //given
         Scoreboard scoreboard = new Scoreboard();
         Scoreboard checkScoreboard = new Scoreboard();
@@ -63,11 +82,11 @@ public class ScoreBoardTest {
         scoreboard.startMatch("Uruguay", "Italy");
         scoreboard.startMatch("Argentina", "Australia");
 
-        scoreboard.updateScore("Mexico", "Canada",0,5);
+        scoreboard.updateScore("Mexico", "Canada", 0, 5);
         scoreboard.updateScore("Spain", "Brazil", 10, 2);
         scoreboard.updateScore("Germany", "France", 2, 2);
         scoreboard.updateScore("Uruguay", "Italy", 6, 6);
-        scoreboard.updateScore("Argentina", "Australia",3, 1);
+        scoreboard.updateScore("Argentina", "Australia", 3, 1);
 
         String[] expected = {
                 "Uruguay 6 - Italy 6",
@@ -78,12 +97,8 @@ public class ScoreBoardTest {
         };
 
         //then
-       assertArrayEquals(expected, scoreboard.getSummary().toArray());
+        assertArrayEquals(expected, scoreboard.getSummary().toArray());
     }
-
-
-
-
 
 
 }

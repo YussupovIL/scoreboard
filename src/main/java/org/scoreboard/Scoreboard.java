@@ -1,32 +1,39 @@
-package org.example;
+package org.scoreboard;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Scoreboard {
 
-    List<Match> matches = new ArrayList<>();
+
+    private List<Match> matches = new ArrayList<>();
+    private Set<String> participatingTeams = new HashSet<>();
     private int startOrderCounter = 0;
 
     public void startMatch(String homeTeam, String awayTeam) {
+        if (participatingTeams.contains(homeTeam) || participatingTeams.contains(awayTeam))
+            throw new IllegalArgumentException("At least one of the teams is already playing");
+        participatingTeams.add(homeTeam);
+        participatingTeams.add(awayTeam);
+
         Match match = new Match(homeTeam, awayTeam, startOrderCounter);
         matches.add(match);
+
         startOrderCounter++;
     }
 
     public void finishMatch(String homeTeam, String awayTeam) {
         Optional<Match> foundMatch = findMatch(homeTeam, awayTeam);
         if (!foundMatch.isPresent()) {
-            throw new IllegalArgumentException("no match with such teams");
+            throw new IllegalArgumentException("No match with such teams");
         }
         matches.remove(foundMatch.get());
+        participatingTeams.remove(homeTeam);
+        participatingTeams.remove(awayTeam);
 
     }
 
-    public void updateScore(String teamHome, String awayTeam, int homeScore, int awayScore) {
-        Optional<Match> foundMatch = findMatch(teamHome, awayTeam);
+    public void updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore) {
+        Optional<Match> foundMatch = findMatch(homeTeam, awayTeam);
         if (!foundMatch.isPresent()) {
             throw new IllegalArgumentException("No match with such teams");
         }
@@ -47,18 +54,17 @@ public class Scoreboard {
     /**
      * helper method to filter the list
      *
-     * @param teamHome
-     * @param teamAway
+     * @param homeTeam
+     * @param awayTeam
      * @return match
      */
-    private Optional<Match> findMatch(String teamHome, String teamAway) {
-        return matches.stream().filter(m -> teamHome.equals(m.getHomeTeam()) && teamAway.equals(m.getAwayTeam())).findFirst();
+    private Optional<Match> findMatch(String homeTeam, String awayTeam) {
+        return matches.stream().filter(m -> homeTeam.equals(m.getHomeTeam()) && awayTeam.equals(m.getAwayTeam())).findFirst();
     }
 
-    // For testing purposes:
+    // Helper method for tests
     public List<Match> getMatches() {
         return matches;
-
     }
 
 }

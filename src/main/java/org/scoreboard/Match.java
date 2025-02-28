@@ -1,6 +1,4 @@
-package org.example;
-
-import java.util.Objects;
+package org.scoreboard;
 
 public class Match {
 
@@ -43,17 +41,11 @@ public class Match {
         return awayScore;
     }
 
-    public void setAwayScore(int awayScore) {
-        this.awayScore = awayScore;
-    }
 
     public int getHomeScore() {
         return homeScore;
     }
 
-    public void setHomeScore(int homeScore) {
-        this.homeScore = homeScore;
-    }
 
     public int getTotalScore(){
         return awayScore + homeScore;
