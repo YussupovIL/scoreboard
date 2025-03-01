@@ -7,39 +7,45 @@ public class ScoreBoardTest {
 
 
     @Test
-    public void startMatchTest() {
-        //given
+    public void startMatchInitialScoreTest() {
         Scoreboard scoreboard = new Scoreboard();
 
-        //when
         scoreboard.startMatch("Nigeria", "Germany");
 
-        //then
         assertEquals( 1, scoreboard.getMatches().size());
         assertEquals(0, scoreboard.getMatches().get(0).getHomeScore());
         assertEquals(0, scoreboard.getMatches().get(0).getAwayScore());
+    }
+
+    @Test
+    public void startMatchTeamsAssignmentTest(){
+        Scoreboard scoreboard = new Scoreboard();
+
+        scoreboard.startMatch("Nigeria", "Germany");
+
         assertEquals("Nigeria", scoreboard.getMatches().get(0).getHomeTeam());
         assertEquals("Germany", scoreboard.getMatches().get(0).getAwayTeam());
+    }
 
+    @Test
+    public void startMatchWithOccupiedTeamsTest() {
+        Scoreboard scoreboard = new Scoreboard();
 
+        scoreboard.startMatch("Nigeria", "Germany");
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             scoreboard.startMatch("Nigeria", "USA");
         });
         assertTrue(exception.getMessage().contains("At least one of the teams is already playing"));
-
     }
 
 
     @Test
     public void removeMatchTest() {
-        //given
         Scoreboard scoreboard = new Scoreboard();
 
-        //when
         scoreboard.startMatch("Nigeria", "Germany");
         scoreboard.finishMatch("Nigeria", "Germany");
 
-        //then
         assertEquals(0, scoreboard.getMatches().size());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
