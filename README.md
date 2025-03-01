@@ -16,3 +16,6 @@ library.
 # Assumptions and design decisions
 - A team can participate in one match only at the same time, assuming we wouldn't have some second division teams playing at the same time (I don't know football);
 - In-memory data structures (List and Set) are used for the sake of simplicity, considering the small size of the application;
+
+# Additional information
+- Project was build as a test task
