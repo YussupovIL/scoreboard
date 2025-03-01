@@ -40,13 +40,20 @@ public class ScoreBoardTest {
 
 
     @Test
-    public void removeMatchTest() {
+    public void finishMatchAmountofMatchesTest() {
         Scoreboard scoreboard = new Scoreboard();
 
         scoreboard.startMatch("Nigeria", "Germany");
         scoreboard.finishMatch("Nigeria", "Germany");
 
         assertEquals(0, scoreboard.getMatches().size());
+    }
+
+    @Test
+    public void finishMatchWithNotPlayingTeamsTest(){
+        Scoreboard scoreboard = new Scoreboard();
+
+        scoreboard.startMatch("Nigeria", "Germany");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             scoreboard.finishMatch("Mexico", "USA");
