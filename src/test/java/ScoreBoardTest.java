@@ -15,7 +15,7 @@ public class ScoreBoardTest {
         scoreboard.startMatch("Nigeria", "Germany");
 
         //then
-        assertEquals(scoreboard.getSummary().size(), 1);
+        assertEquals( 1, scoreboard.getMatches().size());
         assertEquals(0, scoreboard.getMatches().get(0).getHomeScore());
         assertEquals(0, scoreboard.getMatches().get(0).getAwayScore());
         assertEquals("Nigeria", scoreboard.getMatches().get(0).getHomeTeam());
@@ -73,7 +73,7 @@ public class ScoreBoardTest {
     public void getSummaryTest() {
         //given
         Scoreboard scoreboard = new Scoreboard();
-        Scoreboard checkScoreboard = new Scoreboard();
+
 
         //when
         scoreboard.startMatch("Mexico", "Canada");
