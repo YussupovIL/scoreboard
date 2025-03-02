@@ -18,6 +18,16 @@ public class ScoreBoardTest {
     }
 
     @Test
+    public void startMatchWithNullTeams(){
+        Scoreboard scoreboard = new Scoreboard();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.startMatch(null, null);
+        });
+        assertTrue(exception.getMessage().contains("Team names cannot be null or empty"));
+    }
+
+    @Test
     public void startMatchTeamsAssignmentTest(){
         Scoreboard scoreboard = new Scoreboard();
 
@@ -96,7 +106,6 @@ public class ScoreBoardTest {
         });
         assertTrue(exception.getMessage().contains("No match with such teams"));
     }
-
 
     @Test
     public void getSummarySortingTest() {
