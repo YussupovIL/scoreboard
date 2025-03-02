@@ -99,12 +99,9 @@ public class ScoreBoardTest {
 
 
     @Test
-    public void getSummaryTest() {
-        //given
+    public void getSummarySortingTest() {
         Scoreboard scoreboard = new Scoreboard();
 
-
-        //when
         scoreboard.startMatch("Mexico", "Canada");
         scoreboard.startMatch("Spain", "Brazil");
         scoreboard.startMatch("Germany", "France");
@@ -125,8 +122,14 @@ public class ScoreBoardTest {
                 "Germany 2 - France 2"
         };
 
-        //then
         assertArrayEquals(expected, scoreboard.getSummary().toArray());
+    }
+
+    @Test
+    public void getSummaryWhenNoMatches() {
+        Scoreboard scoreboard = new Scoreboard();
+
+        assertTrue(scoreboard.getSummary().isEmpty());
     }
 
 
