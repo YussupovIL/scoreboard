@@ -48,6 +48,16 @@ public class ScoreBoardTest {
         assertTrue(exception.getMessage().contains("At least one of the teams is already playing"));
     }
 
+    @Test
+    public void startMatchWithSameTeamsTest() {
+        Scoreboard scoreboard = new Scoreboard();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.startMatch("Nigeria", "Nigeria");
+        });
+        assertTrue(exception.getMessage().contains("At least one of the teams is already playing"));
+    }
+
 
     @Test
     public void finishMatchAmountOfMatchesTest() {
