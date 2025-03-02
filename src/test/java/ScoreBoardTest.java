@@ -40,7 +40,7 @@ public class ScoreBoardTest {
 
 
     @Test
-    public void finishMatchAmountofMatchesTest() {
+    public void finishMatchAmountOfMatchesTest() {
         Scoreboard scoreboard = new Scoreboard();
 
         scoreboard.startMatch("Nigeria", "Germany");
@@ -50,7 +50,7 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void finishMatchWithNotPlayingTeamsTest(){
+    public void finishMatchWithCurrentlyNotPlayingTeamsTest(){
         Scoreboard scoreboard = new Scoreboard();
 
         scoreboard.startMatch("Nigeria", "Germany");
@@ -63,22 +63,38 @@ public class ScoreBoardTest {
 
 
     @Test
-    public void updateScoreTest() {
-        //given
+    public void updateScoreWithValidScoresTest() {
         Scoreboard scoreboard = new Scoreboard();
 
-        //when
         scoreboard.startMatch("Nigeria", "Germany");
         scoreboard.updateScore("Nigeria", "Germany", 2, 2);
 
-        //then
         assertEquals(2, scoreboard.getMatches().get(0).getHomeScore());
         assertEquals(2, scoreboard.getMatches().get(0).getAwayScore());
+    }
+
+    @Test
+    public void updateScoreWithNegativeScoresTest(){
+        Scoreboard scoreboard = new Scoreboard();
+
+        scoreboard.startMatch("Nigeria", "Germany");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             scoreboard.updateScore("Nigeria", "Germany", -2, -3);
         });
         assertTrue(exception.getMessage().contains("Scores cannot be negative"));
+    }
+
+    @Test
+    public void updateScoreOnNonExistingMatch(){
+        Scoreboard scoreboard = new Scoreboard();
+
+        scoreboard.startMatch("Nigeria", "Germany");
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+           scoreboard.updateScore("Mexico", "USA", 2, 2);
+        });
+        assertTrue(exception.getMessage().contains("No match with such teams"));
     }
 
 
