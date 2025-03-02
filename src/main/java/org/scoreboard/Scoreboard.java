@@ -12,6 +12,9 @@ public class Scoreboard {
         if (homeTeam == null || homeTeam.isEmpty() || awayTeam == null || awayTeam.isEmpty())
             throw new IllegalArgumentException("Team names cannot be null or empty");
 
+        if(homeTeam.equals(awayTeam))
+            throw new IllegalArgumentException("Teams should be different");
+
         if (participatingTeams.contains(homeTeam) || participatingTeams.contains(awayTeam))
             throw new IllegalArgumentException("At least one of the teams is already playing");
 

@@ -55,7 +55,7 @@ public class ScoreBoardTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             scoreboard.startMatch("Nigeria", "Nigeria");
         });
-        assertTrue(exception.getMessage().contains("At least one of the teams is already playing"));
+        assertTrue(exception.getMessage().contains("Teams should be different"));
     }
 
 
